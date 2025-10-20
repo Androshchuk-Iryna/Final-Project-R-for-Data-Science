@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Marharyta Filipovych &amp; Iryna Androshchuk">
+<meta name="dcterms.date" content="2025-10-20">
+
+<title>Our project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="project_files/libs/clipboard/clipboard.min.js"></script>
+<script src="project_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="project_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="project_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="project_files/libs/quarto-html/popper.min.js"></script>
+<script src="project_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="project_files/libs/quarto-html/anchor.min.js"></script>
+<link href="project_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="project_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="project_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="project_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="project_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+<link rel="stylesheet" href="beauty.css">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link" data-scroll-target="#the-problem">The Problem</a></li>
+  <li><a href="#our-research-question" id="toc-our-research-question" class="nav-link" data-scroll-target="#our-research-question">Our Research Question</a></li>
+  <li><a href="#what-we-analyzed" id="toc-what-we-analyzed" class="nav-link" data-scroll-target="#what-we-analyzed">What We Analyzed</a></li>
+  <li><a href="#why-december-2024" id="toc-why-december-2024" class="nav-link" data-scroll-target="#why-december-2024">Why December 2024?</a></li>
+  </ul></li>
+  <li><a href="#first-10-rows-of-weather-data" id="toc-first-10-rows-of-weather-data" class="nav-link" data-scroll-target="#first-10-rows-of-weather-data">First 10 rows of weather data</a></li>
+  <li><a href="#first-10-rows-of-taxi-data" id="toc-first-10-rows-of-taxi-data" class="nav-link" data-scroll-target="#first-10-rows-of-taxi-data">First 10 rows of taxi data</a></li>
+  <li><a href="#visualizations" id="toc-visualizations" class="nav-link" data-scroll-target="#visualizations">Visualizations</a>
+  <ul class="collapse">
+  <li><a href="#trip-duration-over-time" id="toc-trip-duration-over-time" class="nav-link" data-scroll-target="#trip-duration-over-time">Trip Duration Over Time</a></li>
+  <li><a href="#hourly-speed-patterns" id="toc-hourly-speed-patterns" class="nav-link" data-scroll-target="#hourly-speed-patterns">Hourly Speed Patterns</a></li>
+  <li><a href="#speed-distribution-by-weather" id="toc-speed-distribution-by-weather" class="nav-link" data-scroll-target="#speed-distribution-by-weather">Speed Distribution by Weather</a></li>
+  <li><a href="#geographic-distribution-of-trips" id="toc-geographic-distribution-of-trips" class="nav-link" data-scroll-target="#geographic-distribution-of-trips">Geographic Distribution of Trips</a></li>
+  <li><a href="#wait-times-by-hour-and-borough" id="toc-wait-times-by-hour-and-borough" class="nav-link" data-scroll-target="#wait-times-by-hour-and-borough">Wait Times by Hour and Borough</a></li>
+  </ul></li>
+  <li><a href="#key-findings" id="toc-key-findings" class="nav-link" data-scroll-target="#key-findings">Key Findings</a>
+  <ul class="collapse">
+  <li><a href="#finding-2-not-all-neighborhoods-get-equal-service" id="toc-finding-2-not-all-neighborhoods-get-equal-service" class="nav-link" data-scroll-target="#finding-2-not-all-neighborhoods-get-equal-service">Finding 2: Not all neighborhoods get equal service</a></li>
+  <li><a href="#finding-3-rush-hours" id="toc-finding-3-rush-hours" class="nav-link" data-scroll-target="#finding-3-rush-hours">Finding 3: Rush hours</a></li>
+  <li><a href="#finding-4-weather-hits-different-neighborhoods-differently" id="toc-finding-4-weather-hits-different-neighborhoods-differently" class="nav-link" data-scroll-target="#finding-4-weather-hits-different-neighborhoods-differently">Finding 4: Weather Hits Different Neighborhoods Differently</a></li>
+  </ul></li>
+  <li><a href="#what-can-be-done" id="toc-what-can-be-done" class="nav-link" data-scroll-target="#what-can-be-done">What can be done ?</a>
+  <ul class="collapse">
+  <li><a href="#solution-1-use-weather-data-to-pre-position-cars" id="toc-solution-1-use-weather-data-to-pre-position-cars" class="nav-link" data-scroll-target="#solution-1-use-weather-data-to-pre-position-cars">Solution 1: Use Weather Data to Pre-Position Cars</a></li>
+  <li><a href="#solution-2-smart-rush-hour-management" id="toc-solution-2-smart-rush-hour-management" class="nav-link" data-scroll-target="#solution-2-smart-rush-hour-management">Solution 2: Smart Rush Hour Management</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#data-and-methods" id="toc-data-and-methods" class="nav-link" data-scroll-target="#data-and-methods">Data and Methods</a>
+  <ul class="collapse">
+  <li><a href="#we-found" id="toc-we-found" class="nav-link" data-scroll-target="#we-found">We found</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Our project</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Marharyta Filipovych &amp; Iryna Androshchuk </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 20, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><img src="NYC%20coordinates.png" class="img-fluid"></p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="the-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-problem">The Problem</h3>
+<p>Picture this: It’s raining in New York City. You need a ride. You open your app and request a car. If you’re in Manhattan, you might wait 3-4 minutes. If you’re in Queens or the Bronx? Try 6-8 minutes — or more.</p>
+<p>Why does this happen? And more importantly, can we fix it?</p>
+</section>
+<section id="our-research-question" class="level3">
+<h3 class="anchored" data-anchor-id="our-research-question">Our Research Question</h3>
+<p><strong>How does weather impact taxi service efficiency across NYC, and what can we do to make the system work better for everyone — especially during bad weather</strong></p>
+<p>This isn’t just an academic question. It affects: - <strong>Millions of passengers</strong> who need reliable transportation - <strong>Tens of thousands of drivers</strong> trying to earn a living - <strong>The entire city’s</strong> traffic flow and environmental footprint</p>
+</section>
+<section id="what-we-analyzed" class="level3">
+<h3 class="anchored" data-anchor-id="what-we-analyzed">What We Analyzed</h3>
+<p>We dug into <strong>20 million+ taxi trips</strong> from December 2024, combining them with detailed weather data to understand: - How rain and snow slow everything down - Why some neighborhoods get terrible service - When and where the biggest problems occur - What the city could actually do about it</p>
+</section>
+<section id="why-december-2024" class="level3">
+<h3 class="anchored" data-anchor-id="why-december-2024">Why December 2024?</h3>
+<p>December gave us the perfect natural experiment — we had clear sunny days, rainy days, even some snow. By comparing trips under different weather conditions, we can isolate exactly how much weather matters.</p>
+<p>Plus, December includes holiday shopping, parties, and travel — basically, peak demand. If the system struggles in December, those problems probably exist year-round.</p>
+</section>
+</section>
+<section id="first-10-rows-of-weather-data" class="level2">
+<h2 class="anchored" data-anchor-id="first-10-rows-of-weather-data">First 10 rows of weather data</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 7%">
+<col style="width: 3%">
+<col style="width: 13%">
+<col style="width: 11%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 10%">
+<col style="width: 13%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">datetime</th>
+<th style="text-align: left;">date</th>
+<th style="text-align: right;">hour</th>
+<th style="text-align: right;">temperature_celsius</th>
+<th style="text-align: right;">precipitation_mm</th>
+<th style="text-align: right;">rain_mm</th>
+<th style="text-align: right;">snowfall_cm</th>
+<th style="text-align: right;">wind_speed_kmh</th>
+<th style="text-align: right;">cloud_cover_percent</th>
+<th style="text-align: left;">weather_condition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2024-12-01 00:00:00</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-2.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">clear sky</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-12-01 01:00:00</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-2.4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8.2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">clear sky</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-12-01 02:00:00</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-2.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">clear sky</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-12-01 03:00:00</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-3.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">clear sky</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-12-01 04:00:00</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-3.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: left;">clear sky</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-12-01 05:00:00</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">-3.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">mainly clear</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-12-01 06:00:00</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">-3.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">clear sky</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-12-01 07:00:00</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">-3.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6.3</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: left;">mainly clear</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-12-01 08:00:00</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">-3.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: left;">overcast</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-12-01 09:00:00</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">-3.3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: left;">overcast</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="first-10-rows-of-taxi-data" class="level2">
+<h2 class="anchored" data-anchor-id="first-10-rows-of-taxi-data">First 10 rows of taxi data</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 2%">
+<col style="width: 4%">
+<col style="width: 1%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">request_datetime</th>
+<th style="text-align: left;">on_scene_datetime</th>
+<th style="text-align: left;">pickup_datetime</th>
+<th style="text-align: left;">dropoff_datetime</th>
+<th style="text-align: left;">pickup_date</th>
+<th style="text-align: right;">pickup_hour</th>
+<th style="text-align: right;">trip_distance_km</th>
+<th style="text-align: right;">trip_duration_minutes</th>
+<th style="text-align: right;">trip_speed_kmh</th>
+<th style="text-align: right;">wait_time_minutes</th>
+<th style="text-align: left;">company</th>
+<th style="text-align: left;">is_airport_trip</th>
+<th style="text-align: right;">tips</th>
+<th style="text-align: right;">total_fare_usd</th>
+<th style="text-align: left;">pickup_district</th>
+<th style="text-align: left;">pickup_zone</th>
+<th style="text-align: left;">pickup_service_zone</th>
+<th style="text-align: left;">dropoff_district</th>
+<th style="text-align: left;">dropoff_zone</th>
+<th style="text-align: left;">dropoff_service_zone</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2024-12-01 02:26:25</td>
+<td style="text-align: left;">2024-12-01 02:28:18</td>
+<td style="text-align: left;">2024-12-01 02:30:18</td>
+<td style="text-align: left;">2024-12-01 02:45:00</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.91</td>
+<td style="text-align: right;">14.7</td>
+<td style="text-align: right;">40.4</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: left;">Uber</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14.00</td>
+<td style="text-align: left;">Bronx</td>
+<td style="text-align: left;">Eastchester</td>
+<td style="text-align: left;">Boro Zone</td>
+<td style="text-align: left;">Bronx</td>
+<td style="text-align: left;">Soundview/Castle Hill</td>
+<td style="text-align: left;">Boro Zone</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-12-01 02:43:16</td>
+<td style="text-align: left;">2024-12-01 02:46:46</td>
+<td style="text-align: left;">2024-12-01 02:47:39</td>
+<td style="text-align: left;">2024-12-01 02:55:03</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2.91</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">23.6</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: left;">Uber</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10.74</td>
+<td style="text-align: left;">Bronx</td>
+<td style="text-align: left;">Soundview/Castle Hill</td>
+<td style="text-align: left;">Boro Zone</td>
+<td style="text-align: left;">Bronx</td>
+<td style="text-align: left;">Soundview/Castle Hill</td>
+<td style="text-align: left;">Boro Zone</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-12-01 02:02:09</td>
+<td style="text-align: left;">2024-12-01 02:07:28</td>
+<td style="text-align: left;">2024-12-01 02:09:29</td>
+<td style="text-align: left;">2024-12-01 02:20:48</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2.35</td>
+<td style="text-align: right;">11.3</td>
+<td style="text-align: right;">12.5</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: left;">Uber</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11.13</td>
+<td style="text-align: left;">Staten Island</td>
+<td style="text-align: left;">Stapleton</td>
+<td style="text-align: left;">Boro Zone</td>
+<td style="text-align: left;">Staten Island</td>
+<td style="text-align: left;">Stapleton</td>
+<td style="text-align: left;">Boro Zone</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-12-01 02:20:28</td>
+<td style="text-align: left;">2024-12-01 02:27:04</td>
+<td style="text-align: left;">2024-12-01 02:29:05</td>
+<td style="text-align: left;">2024-12-01 02:35:57</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2.95</td>
+<td style="text-align: right;">6.9</td>
+<td style="text-align: right;">25.8</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: left;">Uber</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">12.01</td>
+<td style="text-align: left;">Staten Island</td>
+<td style="text-align: left;">West Brighton</td>
+<td style="text-align: left;">Boro Zone</td>
+<td style="text-align: left;">Staten Island</td>
+<td style="text-align: left;">West Brighton</td>
+<td style="text-align: left;">Boro Zone</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-12-01 02:32:23</td>
+<td style="text-align: left;">2024-12-01 02:35:52</td>
+<td style="text-align: left;">2024-12-01 02:36:43</td>
+<td style="text-align: left;">2024-12-01 03:05:17</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">14.95</td>
+<td style="text-align: right;">28.6</td>
+<td style="text-align: right;">31.4</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: left;">Uber</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">41.65</td>
+<td style="text-align: left;">Staten Island</td>
+<td style="text-align: left;">West Brighton</td>
+<td style="text-align: left;">Boro Zone</td>
+<td style="text-align: left;">Staten Island</td>
+<td style="text-align: left;">Great Kills</td>
+<td style="text-align: left;">Boro Zone</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-12-01 02:07:55</td>
+<td style="text-align: left;">2024-12-01 02:11:20</td>
+<td style="text-align: left;">2024-12-01 02:11:29</td>
+<td style="text-align: left;">2024-12-01 02:15:25</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.06</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">16.2</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: left;">Uber</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8.87</td>
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: left;">Flatbush/Ditmas Park</td>
+<td style="text-align: left;">Boro Zone</td>
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: left;">Flatbush/Ditmas Park</td>
+<td style="text-align: left;">Boro Zone</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-12-01 02:16:48</td>
+<td style="text-align: left;">2024-12-01 02:21:08</td>
+<td style="text-align: left;">2024-12-01 02:21:53</td>
+<td style="text-align: left;">2024-12-01 02:25:22</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">13.1</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: left;">Uber</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8.93</td>
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: left;">Flatbush/Ditmas Park</td>
+<td style="text-align: left;">Boro Zone</td>
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: left;">Flatbush/Ditmas Park</td>
+<td style="text-align: left;">Boro Zone</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-12-01 02:46:41</td>
+<td style="text-align: left;">2024-12-01 02:47:08</td>
+<td style="text-align: left;">2024-12-01 02:47:47</td>
+<td style="text-align: left;">2024-12-01 03:13:55</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.11</td>
+<td style="text-align: right;">26.1</td>
+<td style="text-align: right;">20.9</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: left;">Uber</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">28.63</td>
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: left;">Prospect Heights</td>
+<td style="text-align: left;">Boro Zone</td>
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: left;">Flatlands</td>
+<td style="text-align: left;">Boro Zone</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-12-01 02:14:47</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2024-12-01 02:20:11</td>
+<td style="text-align: left;">2024-12-01 02:28:45</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2.25</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">15.8</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">Lyft</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10.87</td>
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: left;">Greenpoint</td>
+<td style="text-align: left;">Boro Zone</td>
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: left;">Williamsburg (North Side)</td>
+<td style="text-align: left;">Boro Zone</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-12-01 02:26:21</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2024-12-01 02:33:49</td>
+<td style="text-align: left;">2024-12-01 02:39:07</td>
+<td style="text-align: left;">2024-12-01</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.50</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">Lyft</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8.24</td>
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: left;">Williamsburg (North Side)</td>
+<td style="text-align: left;">Boro Zone</td>
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: left;">East Williamsburg</td>
+<td style="text-align: left;">Boro Zone</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Overall statistics for NYC taxi trips on December 2024🐸🐸🐸</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">metric</th>
+<th style="text-align: right;">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">total_trips</td>
+<td style="text-align: right;">21065532.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">average_duration_min</td>
+<td style="text-align: right;">20.60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">median_duration_min</td>
+<td style="text-align: right;">16.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">average_distance_km</td>
+<td style="text-align: right;">8.21</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">average_speed_kmh</td>
+<td style="text-align: right;">21.50</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">average_wait_min</td>
+<td style="text-align: right;">4.10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">average_fare_usd</td>
+<td style="text-align: right;">30.36</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">average_tip_usd</td>
+<td style="text-align: right;">1.29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">average_temp_celsius</td>
+<td style="text-align: right;">1.80</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">average_wind_kmh</td>
+<td style="text-align: right;">9.60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">hours_with_rain</td>
+<td style="text-align: right;">3045309.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hours_with_snow</td>
+<td style="text-align: right;">756832.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Trip statistics by weather condition 🌦️🌤️🌞☀️🌨️</caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 6%">
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 17%">
+<col style="width: 15%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">weather</th>
+<th style="text-align: right;">trips</th>
+<th style="text-align: right;">average duration (min)</th>
+<th style="text-align: right;">average speed (km/h)</th>
+<th style="text-align: right;">average distance (km)</th>
+<th style="text-align: right;">average wait (min)</th>
+<th style="text-align: right;">average fare ($)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">clear sky</td>
+<td style="text-align: right;">7726943</td>
+<td style="text-align: right;">20.4</td>
+<td style="text-align: right;">22.1</td>
+<td style="text-align: right;">8.38</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">30.28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">overcast</td>
+<td style="text-align: right;">7195231</td>
+<td style="text-align: right;">20.5</td>
+<td style="text-align: right;">21.5</td>
+<td style="text-align: right;">8.15</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">29.77</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">drizzle</td>
+<td style="text-align: right;">2034942</td>
+<td style="text-align: right;">20.7</td>
+<td style="text-align: right;">21.8</td>
+<td style="text-align: right;">8.37</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">32.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mainly clear</td>
+<td style="text-align: right;">1430876</td>
+<td style="text-align: right;">21.3</td>
+<td style="text-align: right;">20.4</td>
+<td style="text-align: right;">8.02</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">30.64</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">partly cloudy</td>
+<td style="text-align: right;">974961</td>
+<td style="text-align: right;">21.5</td>
+<td style="text-align: right;">20.0</td>
+<td style="text-align: right;">7.91</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">30.24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rain</td>
+<td style="text-align: right;">832910</td>
+<td style="text-align: right;">21.6</td>
+<td style="text-align: right;">19.1</td>
+<td style="text-align: right;">7.51</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">33.19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">snow fall</td>
+<td style="text-align: right;">756832</td>
+<td style="text-align: right;">19.9</td>
+<td style="text-align: right;">22.3</td>
+<td style="text-align: right;">8.42</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">28.98</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">112837</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">20.9</td>
+<td style="text-align: right;">6.65</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">28.10</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Impact of precipitation on trip metrics🌨️🌨️🌨️🌨️</caption>
+<colgroup>
+<col style="width: 17%">
+<col style="width: 5%">
+<col style="width: 12%">
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">condition</th>
+<th style="text-align: right;">trips</th>
+<th style="text-align: right;">average duration (min)</th>
+<th style="text-align: right;">average speed (km/h)</th>
+<th style="text-align: right;">average distance (km)</th>
+<th style="text-align: right;">average wait (min)</th>
+<th style="text-align: right;">average fare ($)</th>
+<th style="text-align: right;">duration change (%)</th>
+<th style="text-align: right;">speed change (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bad weather (rain or snow)</td>
+<td style="text-align: right;">3624684</td>
+<td style="text-align: right;">20.7</td>
+<td style="text-align: right;">21.3</td>
+<td style="text-align: right;">8.18</td>
+<td style="text-align: right;">4.4</td>
+<td style="text-align: right;">31.71</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">-1.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Great weather (clear or cloudy)</td>
+<td style="text-align: right;">17328011</td>
+<td style="text-align: right;">20.6</td>
+<td style="text-align: right;">21.6</td>
+<td style="text-align: right;">8.23</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">30.09</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">112837</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">20.9</td>
+<td style="text-align: right;">6.65</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">28.10</td>
+<td style="text-align: right;">-18.0</td>
+<td style="text-align: right;">-3.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Trip statistics by pickup district🛣️🛣️🛣️</caption>
+<colgroup>
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 16%">
+<col style="width: 14%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 11%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">district</th>
+<th style="text-align: right;">trips</th>
+<th style="text-align: right;">average duration (min)</th>
+<th style="text-align: right;">average speed (km/h)</th>
+<th style="text-align: right;">average distance (km)</th>
+<th style="text-align: right;">average wait (min)</th>
+<th style="text-align: right;">average fare ($)</th>
+<th style="text-align: right;">airport trips (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Manhattan</td>
+<td style="text-align: right;">7979512</td>
+<td style="text-align: right;">22.4</td>
+<td style="text-align: right;">20.2</td>
+<td style="text-align: right;">8.53</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">38.61</td>
+<td style="text-align: right;">8.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: right;">5569301</td>
+<td style="text-align: right;">19.1</td>
+<td style="text-align: right;">19.4</td>
+<td style="text-align: right;">6.82</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">23.67</td>
+<td style="text-align: right;">8.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Queens</td>
+<td style="text-align: right;">4531395</td>
+<td style="text-align: right;">21.8</td>
+<td style="text-align: right;">25.1</td>
+<td style="text-align: right;">10.04</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">30.53</td>
+<td style="text-align: right;">8.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bronx</td>
+<td style="text-align: right;">2659171</td>
+<td style="text-align: right;">16.6</td>
+<td style="text-align: right;">23.2</td>
+<td style="text-align: right;">7.01</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">20.20</td>
+<td style="text-align: right;">8.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Staten Island</td>
+<td style="text-align: right;">325398</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">28.0</td>
+<td style="text-align: right;">8.72</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">23.40</td>
+<td style="text-align: right;">8.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N/A</td>
+<td style="text-align: right;">754</td>
+<td style="text-align: right;">19.3</td>
+<td style="text-align: right;">29.3</td>
+<td style="text-align: right;">10.59</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">26.80</td>
+<td style="text-align: right;">8.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EWR</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">65.0</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">3.46</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">140.52</td>
+<td style="text-align: right;">8.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Trip statistics by company💪💪💪</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 12%">
+<col style="width: 16%">
+<col style="width: 15%">
+<col style="width: 16%">
+<col style="width: 13%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">company</th>
+<th style="text-align: right;">trips</th>
+<th style="text-align: right;">market share (%)</th>
+<th style="text-align: right;">average duration (min)</th>
+<th style="text-align: right;">average speed (km/h)</th>
+<th style="text-align: right;">average distance (km)</th>
+<th style="text-align: right;">average wait (min)</th>
+<th style="text-align: right;">average fare ($)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Uber</td>
+<td style="text-align: right;">15928527</td>
+<td style="text-align: right;">20.8</td>
+<td style="text-align: right;">21.9</td>
+<td style="text-align: right;">8.46</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">30.85</td>
+<td style="text-align: right;">75.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lyft</td>
+<td style="text-align: right;">5137005</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">20.4</td>
+<td style="text-align: right;">7.46</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">28.84</td>
+<td style="text-align: right;">24.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Trip patterns by hour of a day☀️☀️☀️</caption>
+<colgroup>
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 20%">
+<col style="width: 18%">
+<col style="width: 19%">
+<col style="width: 16%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">hour</th>
+<th style="text-align: right;">trips</th>
+<th style="text-align: right;">average duration (min)</th>
+<th style="text-align: right;">average speed (km/h)</th>
+<th style="text-align: right;">average distance (km)</th>
+<th style="text-align: right;">average wait (min)</th>
+<th style="text-align: right;">average fare ($)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1129932</td>
+<td style="text-align: right;">19.4</td>
+<td style="text-align: right;">23.4</td>
+<td style="text-align: right;">8.73</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">32.53</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1013355</td>
+<td style="text-align: right;">19.3</td>
+<td style="text-align: right;">24.4</td>
+<td style="text-align: right;">8.93</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">31.24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">791310</td>
+<td style="text-align: right;">18.4</td>
+<td style="text-align: right;">25.5</td>
+<td style="text-align: right;">8.89</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">30.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">556994</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">26.6</td>
+<td style="text-align: right;">8.74</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">27.58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">393718</td>
+<td style="text-align: right;">16.6</td>
+<td style="text-align: right;">27.6</td>
+<td style="text-align: right;">8.86</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">26.37</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">314315</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">30.6</td>
+<td style="text-align: right;">10.21</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">29.29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">326088</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">33.7</td>
+<td style="text-align: right;">12.05</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">35.98</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">375053</td>
+<td style="text-align: right;">19.9</td>
+<td style="text-align: right;">32.2</td>
+<td style="text-align: right;">12.04</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">35.97</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">562560</td>
+<td style="text-align: right;">19.7</td>
+<td style="text-align: right;">27.8</td>
+<td style="text-align: right;">10.25</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">32.18</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">828324</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">23.1</td>
+<td style="text-align: right;">8.48</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">30.28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1004169</td>
+<td style="text-align: right;">19.3</td>
+<td style="text-align: right;">21.1</td>
+<td style="text-align: right;">7.56</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">28.21</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">960899</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">21.6</td>
+<td style="text-align: right;">7.66</td>
+<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">27.11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">910250</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">21.3</td>
+<td style="text-align: right;">7.91</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">28.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">897194</td>
+<td style="text-align: right;">20.6</td>
+<td style="text-align: right;">20.7</td>
+<td style="text-align: right;">7.96</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">29.21</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">911567</td>
+<td style="text-align: right;">21.2</td>
+<td style="text-align: right;">20.0</td>
+<td style="text-align: right;">7.94</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">30.13</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">946565</td>
+<td style="text-align: right;">22.2</td>
+<td style="text-align: right;">19.3</td>
+<td style="text-align: right;">7.96</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">30.73</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">1009469</td>
+<td style="text-align: right;">23.6</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">7.91</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">31.92</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">1035556</td>
+<td style="text-align: right;">24.5</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">7.78</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">32.44</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">1068389</td>
+<td style="text-align: right;">24.7</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">7.57</td>
+<td style="text-align: right;">4.4</td>
+<td style="text-align: right;">32.45</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1180840</td>
+<td style="text-align: right;">23.4</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">7.12</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">31.49</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">1242769</td>
+<td style="text-align: right;">21.3</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">7.07</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">30.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">1251435</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">19.6</td>
+<td style="text-align: right;">7.38</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">28.46</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">1205736</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">21.4</td>
+<td style="text-align: right;">8.10</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">28.82</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">1149045</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">22.7</td>
+<td style="text-align: right;">8.59</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">31.29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Weather impact by district🐨🐨🐨</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 16%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">district</th>
+<th style="text-align: left;">weather</th>
+<th style="text-align: right;">trips</th>
+<th style="text-align: right;">average duration (min)</th>
+<th style="text-align: right;">average speed (km/h)</th>
+<th style="text-align: right;">average distance (km)</th>
+<th style="text-align: right;">average wait (min)</th>
+<th style="text-align: right;">average fare ($)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bronx</td>
+<td style="text-align: left;">clear</td>
+<td style="text-align: right;">2203444</td>
+<td style="text-align: right;">16.6</td>
+<td style="text-align: right;">23.2</td>
+<td style="text-align: right;">7.03</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">20.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bronx</td>
+<td style="text-align: left;">precipitation</td>
+<td style="text-align: right;">442105</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">22.8</td>
+<td style="text-align: right;">6.91</td>
+<td style="text-align: right;">4.4</td>
+<td style="text-align: right;">20.47</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: left;">clear</td>
+<td style="text-align: right;">4584814</td>
+<td style="text-align: right;">19.1</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">6.85</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">23.60</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Brooklyn</td>
+<td style="text-align: left;">precipitation</td>
+<td style="text-align: right;">945797</td>
+<td style="text-align: right;">19.1</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">6.71</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">23.99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EWR</td>
+<td style="text-align: left;">clear</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">65.0</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">3.46</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">140.52</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Manhattan</td>
+<td style="text-align: left;">clear</td>
+<td style="text-align: right;">6533655</td>
+<td style="text-align: right;">22.3</td>
+<td style="text-align: right;">20.3</td>
+<td style="text-align: right;">8.51</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">38.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Manhattan</td>
+<td style="text-align: left;">precipitation</td>
+<td style="text-align: right;">1408417</td>
+<td style="text-align: right;">22.9</td>
+<td style="text-align: right;">20.0</td>
+<td style="text-align: right;">8.67</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">41.58</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">clear</td>
+<td style="text-align: right;">624</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">29.5</td>
+<td style="text-align: right;">10.84</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: right;">27.18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">precipitation</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">27.8</td>
+<td style="text-align: right;">9.23</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">24.53</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Queens</td>
+<td style="text-align: left;">clear</td>
+<td style="text-align: right;">3736563</td>
+<td style="text-align: right;">21.9</td>
+<td style="text-align: right;">25.2</td>
+<td style="text-align: right;">10.10</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">30.62</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Queens</td>
+<td style="text-align: left;">precipitation</td>
+<td style="text-align: right;">772996</td>
+<td style="text-align: right;">21.5</td>
+<td style="text-align: right;">24.8</td>
+<td style="text-align: right;">9.80</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">30.18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Staten Island</td>
+<td style="text-align: left;">clear</td>
+<td style="text-align: right;">268910</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">28.0</td>
+<td style="text-align: right;">8.74</td>
+<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">23.37</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Staten Island</td>
+<td style="text-align: left;">precipitation</td>
+<td style="text-align: right;">55242</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">27.7</td>
+<td style="text-align: right;">8.61</td>
+<td style="text-align: right;">5.8</td>
+<td style="text-align: right;">23.47</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="visualizations" class="level2">
+<h2 class="anchored" data-anchor-id="visualizations">Visualizations</h2>
+<section id="trip-duration-over-time" class="level3">
+<h3 class="anchored" data-anchor-id="trip-duration-over-time">Trip Duration Over Time</h3>
+<p>The graph below shows how trip duration varied throughout December, with rainy/snowy days (purple) generally taking slightly longer than clear days (green), though the difference is smaller than you might expect.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_files/figure-html/weather-time-visualization-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="hourly-speed-patterns" class="level3">
+<h3 class="anchored" data-anchor-id="hourly-speed-patterns">Hourly Speed Patterns</h3>
+<p>This chart reveals the dramatic impact of rush hour — speeds plummet during 4-8 PM regardless of weather, dropping to just 16-17 km/h when the city is most congested.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_files/figure-html/hourly-pattern-visualization-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="speed-distribution-by-weather" class="level3">
+<h3 class="anchored" data-anchor-id="speed-distribution-by-weather">Speed Distribution by Weather</h3>
+<p>The distribution curves show that trip speeds are remarkably similar in clear and rainy weather, with most trips clustering around 15-25 km/h — weather matters less than traffic congestion.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_files/figure-html/speed-distribution-weather-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="geographic-distribution-of-trips" class="level3">
+<h3 class="anchored" data-anchor-id="geographic-distribution-of-trips">Geographic Distribution of Trips</h3>
+<p>This map makes the inequality crystal clear: Manhattan (dark purple) dominates with 8 million trips, while Staten Island (light green) barely registers at 325,000 trips.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Retrieving data for the year 2024</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_files/figure-html/map-district-trips-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="wait-times-by-hour-and-borough" class="level3">
+<h3 class="anchored" data-anchor-id="wait-times-by-hour-and-borough">Wait Times by Hour and Borough</h3>
+<p>The heatmap reveals that Staten Island consistently has the longest waits (purple), especially during early morning hours (4-6 AM), while Manhattan maintains relatively short waits (green) throughout the day.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: wait-time-heatmap</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: true</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>wait_heatmap_data <span class="ot">&lt;-</span> merged_data <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(pickup_district, pickup_hour, wait_time_minutes) <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(pickup_district), </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         pickup_district <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Manhattan"</span>, <span class="st">"Brooklyn"</span>, <span class="st">"Queens"</span>, <span class="st">"Bronx"</span>, <span class="st">"Staten Island"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pickup_district, pickup_hour) <span class="sc">|&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_wait =</span> <span class="fu">mean</span>(wait_time_minutes, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wait_heatmap_data, <span class="fu">aes</span>(<span class="at">x =</span> pickup_hour, <span class="at">y =</span> pickup_district, <span class="at">fill =</span> avg_wait)) <span class="sc">+</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">low =</span> emerald, </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">mid =</span> lime_green, </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">high =</span> purple,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">midpoint =</span> <span class="fl">4.5</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"wait time</span><span class="sc">\n</span><span class="st">(minutes)"</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">23</span>, <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Wait times across NYC by hour and borough"</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Darker colors indicate longer waits"</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"hour of day"</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">green_violet_theme</span>() <span class="sc">+</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="key-findings" class="level2">
+<h2 class="anchored" data-anchor-id="key-findings">Key Findings</h2>
+<p>After looking through millions taxi trips, here’s what we noticed ### Finding 1: Bad weather made things harder</p>
+<p>When it rains or snows: - Speeds drop by <strong>1.4%</strong> (from 21.6 to 21.3 km/h) - Wait times jump from <strong>4.0 to 4.4 minutes</strong> — that’s a 10% increase - This affected <strong>3.6 million trips</strong> in December alone</p>
+<section id="finding-2-not-all-neighborhoods-get-equal-service" class="level3">
+<h3 class="anchored" data-anchor-id="finding-2-not-all-neighborhoods-get-equal-service">Finding 2: Not all neighborhoods get equal service</h3>
+<p>If we look at those numbers: - <strong>Manhattan</strong>: 8 million trips, 3.9 min average wait - <strong>Brooklyn</strong>: 5.6 million trips, 4.0 min wait - <strong>Queens</strong>: 4.5 million trips, 4.2 min wait - <strong>Bronx</strong>: 2.7 million trips, 4.2 min wait - <strong>Staten Island</strong>: Only 325k trips, 5.5 min wait!</p>
+<p>It is clearly that Manhattan gets almost <strong>24 times more trips</strong> than Staten Island. And even within the other boroughs, wait times are consistently longer than Manhattan. This show geographic inequality</p>
+</section>
+<section id="finding-3-rush-hours" class="level3">
+<h3 class="anchored" data-anchor-id="finding-3-rush-hours">Finding 3: Rush hours</h3>
+<p>The patterns are super clear: - <strong>5-7 AM</strong>: Fastest speeds (30+ km/h) — roads are empty - <strong>7-9 AM</strong>: Morning-dining rush , speeds drop from almost 28 to 19 km/h - <strong>4-8 PM</strong>: Evening rush is even worse — speeds hit <strong>16.7 km/h</strong> at 7 PM - <strong>Late night (12AM-4 AM)</strong>: Decent speeds but wait times spike because fewer drivers</p>
+</section>
+<section id="finding-4-weather-hits-different-neighborhoods-differently" class="level3">
+<h3 class="anchored" data-anchor-id="finding-4-weather-hits-different-neighborhoods-differently">Finding 4: Weather Hits Different Neighborhoods Differently</h3>
+<p><strong>Manhattan during rain:</strong> - Wait times go from 3.8 to 4.5 minutes (+18%) - But still better than most outer boroughs on clear days</p>
+<p><strong>Queens during rain:</strong> - Wait times: 4.2 to 4.5 minutes - Speed drops: 25.2 to 24.8 km/h</p>
+<p><strong>The pattern</strong>: Manhattan handles bad weather better because there are just more cars around. Rain hurts everyone, but outer boroughs suffer more because they already have fewer cars available.</p>
+<hr>
+</section>
+</section>
+<section id="what-can-be-done" class="level2">
+<h2 class="anchored" data-anchor-id="what-can-be-done">What can be done ?</h2>
+<section id="solution-1-use-weather-data-to-pre-position-cars" class="level3">
+<h3 class="anchored" data-anchor-id="solution-1-use-weather-data-to-pre-position-cars">Solution 1: Use Weather Data to Pre-Position Cars</h3>
+<p><strong>The Problem</strong>: We know it’s going to rain few hours in advance. But every rainy day still feels like a surprise, with wait times spiking and speeds dropping.</p>
+<p><strong>What to do:</strong> - When weather forecast shows rain/snow coming, send alerts to drivers - Offer bonus pay ($2-3 per trip) for drivers who position themselves in high-demand areas before rain starts - During extreme weather, trigger emergency protocols to get more cars on the road</p>
+<p><strong>Real example:</strong> Tuesday, 6 AM: Weather forecast shows heavy rain starting at 7:30 AM in Queens.</p>
+<p>System sends alert: “Rain expected in Queens at 7:30. Position there now for $3 bonus per trip.”</p>
+<p>By 7:30, there are already extra cars in position. Wait times stay reasonable instead of spiking.</p>
+</section>
+<section id="solution-2-smart-rush-hour-management" class="level3">
+<h3 class="anchored" data-anchor-id="solution-2-smart-rush-hour-management">Solution 2: Smart Rush Hour Management</h3>
+<p><strong>The Problem</strong>: Every day, 4-8 PM is a disaster. Speeds drop to 16-17 km/h. We know this will happen. What can we do?</p>
+<p><strong>What to do:</strong> - Pre-position extra vehicles 30 minutes before known rush periods - Use ML models to predict demand by neighborhood and hour - Coordinate with NYC DOT for traffic light timing during peak hours</p>
+<p><strong>Why this matters:</strong> - Rush hour happens every single day - Small improvements (2-3 km/h faster) multiply across millions of trips - Better for passengers, drivers, and the environment (less idling)</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+</section>
+<section id="data-and-methods" class="level2">
+<h2 class="anchored" data-anchor-id="data-and-methods">Data and Methods</h2>
+<p>We analyzed <strong>over 21 million taxi trips</strong> in NYC during December 2024, combined with <strong>hourly weather observations</strong> from Open-Meteo API.</p>
+<p>The taxi data comes from NYC Taxi &amp; Limousine Commission and includes pickup/dropoff times and locations, trip distances, durations, speeds, and fares. Weather data captures temperature, precipitation (rain and snow), wind speed, and conditions for every hour of December.</p>
+<p>We cleaned the data by removing invalid trips, converted measurements (miles to kilometers, seconds to minutes), and matched each trip with the weather at its pickup time. This allows us to compare how service quality changes between clear and rainy days.</p>
+<section id="we-found" class="level3">
+<h3 class="anchored" data-anchor-id="we-found">We found</h3>
+<ol type="1">
+<li><strong>Bad weather slows everything down</strong> — speeds drop 1.4%, wait times jump 10%</li>
+<li><strong>Geography matters</strong> — Manhattan gets 24x more trips than Staten Island and consistently shorter waits</li>
+<li><strong>It’s all predictable</strong> — rush hour and weather patterns repeat daily</li>
+</ol>
+<p>Our solutions could deliver may make small changes but in perspective saving 1 minute per trip = <strong>350,000 hours returned to New Yorkers monthly</strong>.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

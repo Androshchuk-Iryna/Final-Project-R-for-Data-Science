@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&family=Indie+Flower&family=Joti+One&family=Margarine&family=Patrick+Hand&family=Playpen+Sans:wght@100..800&family=Quintessential&display=swap');
+body {
+  font-family: "Playpen Sans", cursive;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #8AEBBE;
+  color: #062841;
+  margin: 0;
+}
+#title-block-header {
+  text-align: center !important;
+}
+
+#toc-title{
+  font-size: 1.4em;
+  color: #012110;
+}
+
+h1.title{
+  margin-top: 1em;
+}
+
+.quarto-title-meta{
+  margin: 1em;
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+  text-align: center !important;
+}
+
+
+#TOC a:hover {
+  color: #420CA5 !important; 
+}
+#TOC a.active, #TOC a:active, #TOC a:focus {
+  color: #420CA5 !important;
+  font-weight: bold;
+}
+.level2 p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+img {
+  margin: 0 auto;
+  display: block;
+  width: 1000px;
+  box-shadow: 0 0 0.5rem 0.4rem #041C07;
+}
+
+
+
+figcaption{
+  color: #D8B1D1;
+  text-align: center;
+}
+    
+.quarto-title-meta-contents p{
+  text-align: center;
+}
+
+ h5{
+  color: #420CA5
+
+}
+
+table caption {
+  font-weight: bold;
+  text-align: center;
+  caption-side: top;
+  font-size: 1.4em;
+  color: #20052E;
+}
+
+table {
+  width: 100%;
+  table-layout: auto;
+  word-wrap: break-word;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}

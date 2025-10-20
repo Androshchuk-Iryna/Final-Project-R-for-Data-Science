@@ -1,0 +1,832 @@
+---
+title: "Our project"
+author: "Marharyta Filipovych & Iryna Androshchuk"
+date: today
+format: 
+  html:
+    toc: true
+    code-fold: true
+    css: beauty.css
+editor_options: 
+  chunk_output_type: console
+---
+
+![](NYC coordinates.png)
+
+## Introduction
+
+### The Problem
+
+Picture this: It's raining in New York City. You need a ride. You open your app and request a car. If you're in Manhattan, you might wait 3-4 minutes. If you're in Queens or the Bronx? Try 6-8 minutes — or more.
+
+Why does this happen? And more importantly, can we fix it?
+
+### Our Research Question
+
+**How does weather impact taxi service efficiency across NYC, and what can we do to make the system work better for everyone — especially during bad weather**
+
+This isn't just an academic question. It affects:
+- **Millions of passengers** who need reliable transportation
+- **Tens of thousands of drivers** trying to earn a living
+- **The entire city's** traffic flow and environmental footprint
+
+### What We Analyzed
+
+We dug into **20 million+ taxi trips** from December 2024, combining them with detailed weather data to understand:
+- How rain and snow slow everything down
+- Why some neighborhoods get terrible service
+- When and where the biggest problems occur
+- What the city could actually do about it
+
+### Why December 2024?
+
+December gave us the perfect natural experiment — we had clear sunny days, rainy days, even some snow. By comparing trips under different weather conditions, we can isolate exactly how much weather matters.
+
+Plus, December includes holiday shopping, parties, and travel — basically, peak demand. If the system struggles in December, those problems probably exist year-round.
+
+
+```{r}
+#| label: setup
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(
+  arrow,jsonlite,lubridate,
+  knitr,dplyr,tidyr,ggplot2,sf,rnaturalearth)
+```
+
+
+```{r}
+#| label: data-loading
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+
+library(arrow)
+library(jsonlite)
+library(tibble)
+
+library(tigris)
+options(tigris_use_cache = TRUE)
+
+taxi_file <- "fhvhv_tripdata_2024-12.parquet"
+zones_file <- "taxi_zone_lookup.csv"
+
+taxi_cols <- c(
+  "hvfhs_license_num",
+  "request_datetime",
+  "on_scene_datetime",
+  "pickup_datetime",
+  "dropoff_datetime",
+  "PULocationID",
+  "DOLocationID",
+  "trip_miles",
+  "trip_time",
+  "base_passenger_fare",
+  "tolls",
+  "tips",
+  "congestion_surcharge",
+  "airport_fee"
+)
+
+latitude <- 40.7128
+longitude <- -74.0060
+start_date <- "2024-12-01"
+end_date <- "2024-12-31"
+hourly_vars <- c(
+  "temperature_2m",
+  "precipitation",
+  "rain",
+  "snowfall",
+  "wind_speed_10m",
+  "weather_code",
+  "cloud_cover"
+)
+temperature_unit <- "celsius"
+wind_speed_unit <- "kmh"
+precipitation_unit <- "mm"
+timezone <- "America/New_York"
+
+taxi_data <- read_parquet(taxi_file, col_select = taxi_cols)
+taxi_zones <- read_csv_arrow(zones_file)
+
+weather_url <- paste0(
+  "https://archive-api.open-meteo.com/v1/archive",
+  "?latitude=", latitude,
+  "&longitude=", longitude,
+  "&start_date=", start_date,
+  "&end_date=", end_date,
+  "&hourly=", paste(hourly_vars, collapse = ","),
+  "&temperature_unit=", temperature_unit,
+  "&wind_speed_unit=", wind_speed_unit,
+  "&precipitation_unit=", precipitation_unit,
+  "&timezone=", timezone
+)
+
+weather_response <- fromJSON(weather_url)
+weather_data <- as_tibble(weather_response$hourly)
+```
+
+## First 10 rows of weather data
+
+```{r}
+#| label: clean-weather
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+map_weather_condition <- function(code) {
+  case_when(
+    code == 0 ~ "clear sky",
+    code == 1 ~ "mainly clear",
+    code == 2 ~ "partly cloudy",
+    code == 3 ~ "overcast",
+    code %in% c(45, 48) ~ "fog",
+    code %in% c(51, 53, 55) ~ "drizzle",
+    code %in% c(56, 57) ~ "freezing drizzle",
+    code %in% c(61, 63, 65) ~ "rain",
+    code %in% c(66, 67) ~ "freezing rain",
+    code %in% c(71, 73, 75) ~ "snow fall",
+    code == 77 ~ "snow grains",
+    code %in% c(80, 81, 82) ~ "rain showers",
+    code %in% c(85, 86) ~ "snow showers",
+    code == 95 ~ "thunderstorm",
+    code %in% c(96, 99) ~ "thunderstorm with hail",
+    TRUE ~ "unknown"
+  )
+}
+
+weather_data_clean <- weather_data |>
+  transmute(
+    datetime = ymd_hm(time),
+    date = as_date(datetime),
+    hour = hour(datetime),
+    temperature_celsius = temperature_2m,
+    precipitation_mm = precipitation,
+    rain_mm = rain,
+    snowfall_cm = snowfall,
+    wind_speed_kmh = wind_speed_10m,
+    cloud_cover_percent = cloud_cover,
+    weather_condition = map_weather_condition(weather_code)
+  )
+
+kable(head(weather_data_clean, 10))
+
+```
+
+
+```{r}
+#| label: taxi-helper-functions
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+
+MILES_TO_KM <- 1.60934
+SECONDS_TO_HOURS <- 3600
+SECONDS_TO_MINUTES <- 60
+
+convert_miles_to_km <- function(miles, digits = 2) {
+  round(miles * MILES_TO_KM, digits)
+}
+
+convert_seconds_to_minutes <- function(seconds, digits = 1) {
+  round(seconds / SECONDS_TO_MINUTES, digits)
+}
+
+calculate_speed_kmh <- function(distance_km, time_seconds, digits = 1) {
+  speed <- ifelse(
+    time_seconds > 0,
+    (distance_km / time_seconds) * SECONDS_TO_HOURS,
+    NA
+  )
+  round(speed, digits)
+}
+
+calculate_time_diff_minutes <- function(end_time, start_time, digits = 1) {
+  diff_minutes <- as.numeric(difftime(end_time, start_time, units = "mins"))
+  round(diff_minutes, digits)
+}
+
+map_company_name <- function(license_num) {
+  case_when(
+    license_num == "HV0003" ~ "Uber",
+    license_num == "HV0005" ~ "Lyft",
+    license_num == "HV0004" ~ "Via",
+    license_num == "HV0002" ~ "Juno",
+    TRUE ~ "other"
+  )
+}
+
+calculate_total_fare <- function(base_fare, tolls, congestion, airport, digits = 2) {
+  total <- base_fare + tolls + congestion + airport
+  round(total, digits)
+}
+
+is_airport <- function(airport_fee) {
+  ifelse(airport_fee > 0, "Yes", "No")
+}
+```
+
+## First 10 rows of taxi data
+
+```{r}
+#| label: clean-taxi
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+taxi_data_clean <- taxi_data |>
+  transmute(
+    request_datetime,
+    on_scene_datetime,
+    pickup_datetime,
+    dropoff_datetime,
+    pickup_date = as_date(pickup_datetime),
+    pickup_hour = hour(pickup_datetime),
+    PULocationID,
+    DOLocationID,
+    trip_distance_km = convert_miles_to_km(trip_miles),
+    trip_duration_minutes = convert_seconds_to_minutes(trip_time),
+    trip_speed_kmh = calculate_speed_kmh(trip_distance_km, trip_time),
+    wait_time_minutes = calculate_time_diff_minutes(on_scene_datetime, request_datetime),
+    company = map_company_name(hvfhs_license_num),
+    is_airport_trip = is_airport(airport_fee),
+    tips,
+    total_fare_usd = calculate_total_fare(
+      base_passenger_fare, tolls, congestion_surcharge, airport_fee)) |>
+  filter(
+    trip_duration_minutes > 0,
+    trip_distance_km > 0,
+    trip_speed_kmh > 0
+  )
+
+
+taxi_data_with_locations <- taxi_data_clean |>
+  left_join(
+    taxi_zones,  by = c("PULocationID" = "LocationID") ) |>
+  left_join(
+    taxi_zones,
+    by = c("DOLocationID" = "LocationID")) |>
+  rename(
+    pickup_district = Borough.x,          
+    pickup_zone = Zone.x,
+    pickup_service_zone = service_zone.x,
+    dropoff_district = Borough.y,         
+    dropoff_zone = Zone.y,
+    dropoff_service_zone = service_zone.y
+  ) |>
+  select(-PULocationID, -DOLocationID)
+
+kable(head(taxi_data_with_locations, 10))
+
+```
+
+```{r}
+#| label: merge-data
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+
+merged_data <- taxi_data_with_locations |>
+  left_join(
+    weather_data_clean,
+    by = c("pickup_date" = "date", "pickup_hour" = "hour")
+  )
+
+```
+
+```{r}
+#| label: summary-helper-functions
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+
+calculate_trip_summary <- function(data, vars_for_grouping = NULL) {
+  
+  if (!is.null(vars_for_grouping)) {
+    data <- data |> group_by(across(all_of(vars_for_grouping)))
+  }
+  
+  summary_data <- data |>
+    summarise(
+      trips = n(),
+      average_duration_min = round(mean(trip_duration_minutes, na.rm = TRUE), 1),
+      average_speed_kmh = round(mean(trip_speed_kmh, na.rm = TRUE), 1),
+      average_distance_km = round(mean(trip_distance_km, na.rm = TRUE), 2),
+      average_wait_min = round(mean(wait_time_minutes, na.rm = TRUE), 1),
+      average_fare_usd = round(mean(total_fare_usd, na.rm = TRUE), 2),
+      .groups = "drop"
+    )
+  
+  return(summary_data)
+}
+
+```
+
+```{r}
+#| label: summary-overall
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+overall_summary <- merged_data |>
+  summarise(
+    total_trips = as.integer(n()),
+    average_duration_min = round(mean(trip_duration_minutes, na.rm = TRUE), 1),
+    median_duration_min = round(median(trip_duration_minutes, na.rm = TRUE), 1),
+    average_distance_km = round(mean(trip_distance_km, na.rm = TRUE), 2),
+    average_speed_kmh = round(mean(trip_speed_kmh, na.rm = TRUE), 1),
+    average_wait_min = round(mean(wait_time_minutes, na.rm = TRUE), 1),
+    average_fare_usd = round(mean(total_fare_usd, na.rm = TRUE), 2),
+    average_tip_usd = round(mean(tips, na.rm = TRUE), 2),
+    average_temp_celsius = round(mean(temperature_celsius, na.rm = TRUE), 1),
+    average_wind_kmh = round(mean(wind_speed_kmh, na.rm = TRUE), 1),
+    hours_with_rain = as.integer(sum(rain_mm > 0, na.rm = TRUE)),
+    hours_with_snow = as.integer(sum(snowfall_cm > 0, na.rm = TRUE))
+  )|> 
+  pivot_longer(everything(), names_to = "metric", values_to = "value")
+
+kable(
+  overall_summary,
+  caption = "Overall statistics for NYC taxi trips on December 2024🐸🐸🐸"
+)
+
+```
+
+```{r}
+#| label: summary-by-weather
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+weather_summary <- calculate_trip_summary(merged_data, vars_for_grouping = "weather_condition") |> arrange(desc(trips))
+
+kable(
+  weather_summary,
+  caption = "Trip statistics by weather condition 🌦️🌤️🌞☀️🌨️",
+  col.names = c("weather", "trips", "average duration (min)", "average speed (km/h)", "average distance (km)", "average wait (min)", "average fare ($)"))
+```
+
+```{r}
+#| label: weather-impact
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+weather_impact <- merged_data |>
+    mutate(
+      has_precipitation = ifelse(precipitation_mm > 0, 
+                                 "Bad weather (rain or snow)", 
+                                 "Great weather (clear or cloudy)")) |>
+    calculate_trip_summary(vars_for_grouping = "has_precipitation")
+
+baseline_duration <- weather_impact$average_duration_min[weather_impact$has_precipitation == "Great weather (clear or cloudy)"][1]
+baseline_speed <- weather_impact$average_speed_kmh[weather_impact$has_precipitation == "Great weather (clear or cloudy)"][1]
+
+weather_impact <- weather_impact |>
+  mutate(
+    duration_change_pct = round((average_duration_min / baseline_duration - 1) * 100, 1),
+    speed_change_pct = round((average_speed_kmh / baseline_speed - 1) * 100, 1))
+
+kable(
+  weather_impact,
+  caption = "Impact of precipitation on trip metrics🌨️🌨️🌨️🌨️",
+  col.names = c("condition", "trips", "average duration (min)", "average speed (km/h)",  "average distance (km)", "average wait (min)", "average fare ($)", 
+  "duration change (%)", "speed change (%)"))
+```
+
+```{r}
+#| label: summary-by-district
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+district_summary <- merged_data |>
+  filter(!is.na(pickup_district)) |>
+  calculate_trip_summary(vars_for_grouping = "pickup_district") |>
+  mutate(
+    pct_airport_trips = round(mean(merged_data$is_airport_trip == "Yes", na.rm = TRUE) * 100, 1)) |>
+  arrange(desc(trips))
+
+kable(
+  district_summary,
+  caption = "Trip statistics by pickup district🛣️🛣️🛣️",
+  col.names = c("district", "trips", "average duration (min)", "average speed (km/h)", "average distance (km)", "average wait (min)", "average fare ($)", 
+"airport trips (%)"))
+```
+
+```{r}
+#| label: summary-by-company
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+company_summary <- merged_data |>
+  group_by(company) |>
+  calculate_trip_summary() |>
+  mutate(
+    market_share_pct = round((trips / sum(trips)) * 100, 1)) |>
+  arrange(desc(trips))
+
+kable(
+  company_summary,
+  caption = "Trip statistics by company💪💪💪",
+  col.names = c("company", "trips", "market share (%)", "average duration (min)", 
+"average speed (km/h)", "average distance (km)", "average wait (min)", "average fare ($)"))
+```
+
+```{r}
+#| label: summary-by-hour
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+hourly_summary <- calculate_trip_summary(merged_data, vars_for_grouping = "pickup_hour")|> arrange(pickup_hour)
+
+kable(
+  hourly_summary,
+  caption = "Trip patterns by hour of a day☀️☀️☀️",
+  col.names = c("hour", "trips", "average duration (min)", "average speed (km/h)", 
+                "average distance (km)", "average wait (min)", "average fare ($)"))
+```
+
+```{r}
+#| label: summary-weather-district
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+#| 
+weather_district_summary <- merged_data  |>
+    filter(!is.na(pickup_district), !is.na(weather_condition)) |>
+    mutate(
+      has_precipitation = ifelse(precipitation_mm > 0, "precipitation", "clear"))|>
+    calculate_trip_summary(vars_for_grouping = c("pickup_district", "has_precipitation")) |>
+    arrange(pickup_district, has_precipitation)
+
+kable(
+  weather_district_summary,
+  caption = "Weather impact by district🐨🐨🐨",
+  col.names = c("district", "weather", "trips", "average duration (min)", 
+                "average speed (km/h)", "average distance (km)", 
+                "average wait (min)", "average fare ($)"))
+```
+
+
+```{r}
+#| label: graph-helpers
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+deep_violet <- "#4a1c5f"
+purple <- "#6b3fa0"
+magenta <- "#9b59b6"
+green_teal <- "#16a085"
+emerald <- "#27ae60"
+lime_green <- "#52c77a"
+plot_bg <- "#f0f4f0"
+panel_bg <- "#f8fdf8"
+text_dark <- "#2d2d2d"
+text_darker <- "#1a1a1a"
+
+green_violet_theme <- function() {
+  theme_classic() +
+    theme(
+      plot.title = element_text(face = "bold", size = 16, color = text_darker),
+      plot.subtitle = element_text(face = "italic", size = 11, color = text_dark),
+      plot.background = element_rect(fill = plot_bg, color = deep_violet, linewidth = 2),
+      panel.background = element_rect(fill = panel_bg, color = NA),
+      axis.text.x = element_text(color = text_dark, size = 10),
+      axis.text.y = element_text(color = text_dark, size = 10),
+      axis.title.x = element_text(color = text_darker, face = "bold", size = 12, 
+                                   margin = margin(t = 15)),
+      axis.title.y = element_text(color = text_darker, face = "bold", size = 12),
+      plot.margin = margin(t = 20, r = 20, b = 15, l = 10, unit = "pt"),
+      legend.background = element_rect(fill = panel_bg, color = NA),
+      legend.text = element_text(color = text_dark, size = 9),
+      legend.title = element_text(color = text_darker, face = "bold", size = 10),
+      legend.position = "bottom"
+    )
+}
+
+weather_data <- merged_data |>
+  filter(!is.na(precipitation_mm)) |>  
+  mutate(
+    has_precipitation = ifelse(precipitation_mm > 0, 
+                              "rainy/snowy", 
+                              "clear/cloudy")
+  )
+
+```
+
+## Visualizations
+
+### Trip Duration Over Time
+
+The graph below shows how trip duration varied throughout December, with rainy/snowy days (purple) generally taking slightly longer than clear days (green), though the difference is smaller than you might expect.
+
+```{r}
+#| label: weather-time-visualization
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+time_weather_data <- weather_data |>
+  group_by(pickup_date, has_precipitation) |>
+  summarise(
+    average_trip_duration_min = round(mean(trip_duration_minutes, na.rm = TRUE),1),
+    number_of_trips = n(),
+    .groups = "drop" )
+
+ggplot(time_weather_data, aes(x = pickup_date, 
+                               y = average_trip_duration_min, 
+                               color = has_precipitation,
+                               group = has_precipitation)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(aes(size = number_of_trips), alpha = 0.7) +
+  scale_color_manual(values = c("rainy/snowy" = purple, 
+                              "clear/cloudy" = emerald)) +
+  scale_size_continuous(range = c(3, 12), labels = scales::comma) +
+  labs(
+    title = "Trip duration over time by weather",
+    x = "date",
+    y = "average trip duration (min)",
+    color = "weather",
+    size = "number of trips"
+  ) +
+  green_violet_theme() + theme(
+    legend.box = "vertical"
+  )
+```
+
+### Hourly Speed Patterns
+
+This chart reveals the dramatic impact of rush hour — speeds plummet during 4-8 PM regardless of weather, dropping to just 16-17 km/h when the city is most congested.
+
+```{r}
+#| label: hourly-pattern-visualization
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+hourly_weather_data <- weather_data |>
+  group_by(pickup_hour, has_precipitation) |>
+  summarise(
+    average_trip_duration_min = round(mean(trip_duration_minutes, na.rm = TRUE),1),
+    average_speed_kmh = round(mean(trip_speed_kmh, na.rm = TRUE), 1),
+    number_of_trips = n(),
+    .groups = "drop")
+
+ggplot(hourly_weather_data, aes(x = pickup_hour, y = average_speed_kmh, 
+                                 fill = has_precipitation)) +
+  geom_col(position = "dodge", alpha = 0.8) +
+  scale_fill_manual(values = c("rainy/snowy" = purple, 
+                             "clear/cloudy" = emerald)) +
+  scale_x_continuous(breaks = seq(0, 23, 2)) +
+  labs(
+    title = "Average trip speed by hour of a day and weather",
+    x = "hour of day",
+    y = "average Speed (km/h)",
+    fill = "weather"
+  ) +
+  green_violet_theme()
+```
+
+### Speed Distribution by Weather
+
+The distribution curves show that trip speeds are remarkably similar in clear and rainy weather, with most trips clustering around 15-25 km/h — weather matters less than traffic congestion.
+
+```{r}
+#| label: speed-distribution-weather
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+speed_weather_data <- weather_data |>
+  select(trip_speed_kmh, has_precipitation) |>
+  filter(trip_speed_kmh > 0 & trip_speed_kmh < 100) |>
+  slice_sample(prop = 0.1)
+
+ggplot(speed_weather_data, aes(x = trip_speed_kmh, 
+                                fill = has_precipitation,
+                                color = has_precipitation)) +
+  geom_density(alpha = 0.4, linewidth = 1.2) +
+ scale_fill_manual(values = c("rainy/snowy" = purple, 
+                             "clear/cloudy" = emerald)) +
+scale_color_manual(values = c("rainy/snowy" = purple, 
+                              "clear/cloudy" = emerald)) +
+  labs(
+    title = "Distribution of trip speeds by weather",
+    x = "trip speed (km/h)",
+    y = "density",
+    fill = "weather"
+  ) +
+  green_violet_theme() +
+  guides(color = "none")
+```
+
+### Geographic Distribution of Trips
+
+This map makes the inequality crystal clear: Manhattan (dark purple) dominates with 8 million trips, while Staten Island (light green) barely registers at 325,000 trips.
+
+```{r}
+#| label: map-district-trips
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+ny_counties <- counties(state = "NY", cb = TRUE)
+
+
+all_trips <- merged_data |>
+  select(pickup_district) |>
+  filter(!is.na(pickup_district)) |>
+  count(pickup_district, name = "trips") |>
+  filter(pickup_district %in% c("Manhattan", "Brooklyn", "Queens", "Bronx", "Staten Island")) |>
+  mutate(
+    trips = trips / 1000000, 
+    NAME = case_when(
+      pickup_district == "Manhattan" ~ "New York",
+      pickup_district == "Brooklyn" ~ "Kings",
+      pickup_district == "Queens" ~ "Queens",
+      pickup_district == "Bronx" ~ "Bronx",
+      pickup_district == "Staten Island" ~ "Richmond"
+    )
+  ) |>
+  select(NAME, trips)
+
+ny_map <- ny_counties |>
+  left_join(all_trips, by = "NAME")
+
+ggplot(ny_map) +
+  geom_sf(aes(fill = trips), color = "white", linewidth = 0.5, show.legend = FALSE) +
+  scale_fill_gradient(low = emerald, high = purple, na.value = "gray90") +
+  coord_sf(xlim = c(-74.26, -73.70), ylim = c(40.50, 40.92)) +
+  labs(title ="Trip distribution across NYC boroughs")+
+  green_violet_theme() +
+  theme(
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank()
+  )
+```
+
+### Wait Times by Hour and Borough
+
+The heatmap reveals that Staten Island consistently has the longest waits (purple), especially during early morning hours (4-6 AM), while Manhattan maintains relatively short waits (green) throughout the day.
+
+
+```{r}
+
+#| label: wait-time-heatmap
+#| echo: false
+#| output: true
+#| warning: false
+#| message: false
+
+wait_heatmap_data <- merged_data |>
+  select(pickup_district, pickup_hour, wait_time_minutes) |>
+  filter(!is.na(pickup_district), 
+         pickup_district %in% c("Manhattan", "Brooklyn", "Queens", "Bronx", "Staten Island")) |>
+  group_by(pickup_district, pickup_hour) |>
+  summarise(avg_wait = mean(wait_time_minutes, na.rm = TRUE), .groups = "drop")
+
+ggplot(wait_heatmap_data, aes(x = pickup_hour, y = pickup_district, fill = avg_wait)) +
+  geom_tile(color = "white", linewidth = 0.5) +
+  scale_fill_gradient2(
+    low = emerald, 
+    mid = lime_green, 
+    high = purple,
+    midpoint = 4.5,
+    name = "wait time\n(minutes)"
+  ) +
+  scale_x_continuous(breaks = seq(0, 23, 2)) +
+  labs(
+    title = "Wait times across NYC by hour and borough",
+    subtitle = "Darker colors indicate longer waits",
+    x = "hour of day",
+    y = NULL
+  ) +
+  green_violet_theme() +
+  theme(
+    axis.text.y = element_text(size = 11),
+    panel.grid = element_blank()
+  )
+```
+
+## Key Findings
+After looking through millions taxi trips, here's what we noticed
+### Finding 1: Bad weather made things harder
+
+When it rains or snows:
+- Speeds drop by **1.4%** (from 21.6 to 21.3 km/h)
+- Wait times jump from **4.0 to 4.4 minutes** — that's a 10% increase
+- This affected **3.6 million trips** in December alone
+
+
+### Finding 2: Not all neighborhoods get equal service
+If we look at those numbers:
+- **Manhattan**: 8 million trips, 3.9 min average wait
+- **Brooklyn**: 5.6 million trips, 4.0 min wait
+- **Queens**: 4.5 million trips, 4.2 min wait
+- **Bronx**: 2.7 million trips, 4.2 min wait
+- **Staten Island**: Only 325k trips, 5.5 min wait!
+
+It is clearly that Manhattan gets almost **24 times more trips** than Staten Island. And even within the other boroughs, wait times are consistently longer than Manhattan. This show geographic inequality
+
+
+### Finding 3: Rush hours
+The patterns are super clear:
+- **5-7 AM**: Fastest speeds (30+ km/h) — roads are empty
+- **7-9 AM**: Morning-dining rush , speeds drop from almost 28  to 19 km/h
+- **4-8 PM**: Evening rush is even worse — speeds hit **16.7 km/h** at 7 PM
+- **Late night (12AM-4 AM)**: Decent speeds but wait times spike because fewer drivers
+
+### Finding 4: Weather Hits Different Neighborhoods Differently
+
+**Manhattan during rain:**
+- Wait times go from 3.8 to 4.5 minutes (+18%)
+- But still better than most outer boroughs on clear days
+
+**Queens during rain:**
+- Wait times: 4.2 to 4.5 minutes
+- Speed drops: 25.2 to 24.8 km/h
+
+**The pattern**: Manhattan handles bad weather better because there are just more cars around. Rain hurts everyone, but outer boroughs suffer more because they already have fewer cars available.
+
+
+
+---
+## What can be done ?
+### Solution 1: Use Weather Data to Pre-Position Cars
+
+**The Problem**: We know it's going to rain few hours in advance. But every rainy day still feels like a surprise, with wait times spiking and speeds dropping.
+
+**What to do:**
+- When weather forecast shows rain/snow coming, send alerts to drivers
+- Offer bonus pay ($2-3 per trip) for drivers who position themselves in high-demand areas before rain starts
+- During extreme weather, trigger emergency protocols to get more cars on the road
+
+**Real example:**
+Tuesday, 6 AM: Weather forecast shows heavy rain starting at 7:30 AM in Queens.
+
+System sends alert: "Rain expected in Queens at 7:30. Position there now for $3 bonus per trip."
+
+By 7:30, there are already extra cars in position. Wait times stay reasonable instead of spiking.
+
+### Solution 2: Smart Rush Hour Management
+
+**The Problem**: Every day, 4-8 PM is a disaster. Speeds drop to 16-17 km/h. We know this will happen. What can we do?
+
+**What to do:**
+- Pre-position extra vehicles 30 minutes before known rush periods
+- Use ML models to predict demand by neighborhood and hour
+- Coordinate with NYC DOT for traffic light timing during peak hours
+
+**Why this matters:**
+- Rush hour happens every single day
+- Small improvements (2-3 km/h faster) multiply across millions of trips
+- Better for passengers, drivers, and the environment (less idling)
+
+
+
+
+## Conclusion
+
+## Data and Methods
+
+We analyzed **over 21 million taxi trips** in NYC during December 2024, combined with **hourly weather observations** from Open-Meteo API.
+
+The taxi data comes from NYC Taxi & Limousine Commission and includes pickup/dropoff times and locations, trip distances, durations, speeds, and fares. Weather data captures temperature, precipitation (rain and snow), wind speed, and conditions for every hour of December.
+
+We cleaned the data by removing invalid trips, converted measurements (miles to kilometers, seconds to minutes), and matched each trip with the weather at its pickup time. This allows us to compare how service quality changes between clear and rainy days. 
+
+
+### We found
+
+1. **Bad weather slows everything down** — speeds drop 1.4%, wait times jump 10%
+2. **Geography matters** — Manhattan gets 24x more trips than Staten Island and consistently shorter waits
+3. **It's all predictable** — rush hour and weather patterns repeat daily
+
+
+Our solutions could deliver may make small changes but in perspective saving 1 minute per trip = **350,000 hours returned to New Yorkers monthly**.
